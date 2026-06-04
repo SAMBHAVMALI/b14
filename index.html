@@ -1011,8 +1011,8 @@
             <div class="scrapbook-desk">
                 <div class="washi-tape"></div>
                 <div class="polaroid" style="--r: -2deg;">
-                    <!-- Here is your video! -->
-                    <video src="my-video.mp4" autoplay loop playsinline controls style="width: 100%; aspect-ratio: 1; object-fit: cover; display: block; border-radius: 2px;"></video>
+                    <!-- Removed autoplay here so it doesn't run early -->
+                    <video src="my-video.mp4" loop playsinline controls style="width: 100%; aspect-ratio: 1; object-fit: cover; display: block; border-radius: 2px;"></video>
                     
                     <div class="polaroid-caption">Where It All Began</div>
                 </div>
@@ -1306,6 +1306,16 @@
                 }
             } else if (stageId === 'began-section' || stageId === 'appreciate-section' || stageId === 'gallery-section' || stageId === 'letter-section') {
                 canvasMode = 'default';
+                
+                // THIS ENSURES THE VIDEO ONLY AUTO-PLAYS ON THIS SPECIFIC PAGE
+                if (stageId === 'began-section') {
+                    const memoryVideo = document.querySelector('video');
+                    if (memoryVideo) {
+                        memoryVideo.currentTime = 0;
+                        memoryVideo.play().catch(e => console.log("Browser blocked autoplay:", e));
+                    }
+                }
+
             } else if (stageId === 'ending-section') {
                 canvasMode = 'fireworks';
                 initFireworkEngine();
