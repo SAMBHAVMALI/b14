@@ -142,7 +142,9 @@
         .polaroid img {
             width: 100%;
             aspect-ratio: 1;
+            /* CHANGED TO CONTAIN SO THE ENTIRE IMAGE IS 100% VISIBLE */
             object-fit: contain;
+            background-color: #ffffff;
             display: block;
         }
         .polaroid-caption {
@@ -889,7 +891,10 @@
 </head>
 <body>
 
+    <!-- INVISIBLE AUDIO PLAYER FOR CAKE SECTION -->
     <audio id="bday-audio" src="happy-birthday.mp3.mpeg" loop></audio>
+    <!-- INVISIBLE AUDIO PLAYER FOR GRAND FINALE -->
+    <audio id="fireworks-audio" src="fireworks.mp3"></audio>
 
     <div id="sky-flash-overlay"></div>
     <canvas id="ambient-canvas"></canvas>
@@ -1008,6 +1013,7 @@
             <div class="scrapbook-desk">
                 <div class="washi-tape"></div>
                 <div class="polaroid" style="--r: -2deg;">
+                    <!-- Removed autoplay here so it doesn't run early -->
                     <video src="my-video.mp4" loop playsinline controls style="width: 100%; aspect-ratio: 1; object-fit: cover; display: block; border-radius: 2px;"></video>
                     
                     <div class="polaroid-caption">Where It All Began</div>
@@ -1033,6 +1039,7 @@
                 <span class="handwritten">The Little Things That Make You , You</span>
                 <h2 class="serif-heading" style="font-size: 1.8rem; margin-bottom: 5px;">20 Things I Appreciate About You</h2>
                 
+                <!-- NEW FEATURE: Added Skip to #21 Envelope Button -->
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; width: 100%;">
                     <p style="font-size: 0.85rem; color: var(--pink-dark); margin: 0;" id="envelope-counter">0 / 20 Opened</p>
                     <button style="background: none; border: 1px dashed var(--pink-dark); color: var(--pink-dark); border-radius: 20px; padding: 4px 12px; font-size: 0.75rem; font-family: 'Poppins', sans-serif; cursor: pointer; display: flex; align-items: center; gap: 5px;" onclick="skipToEnvelope21()">Skip to #21 ✨</button>
@@ -1077,6 +1084,7 @@
             <span class="handwritten">Pieces of Your World</span>
             <h2 class="serif-heading" style="font-size: 2rem; margin-bottom: 10px;">Cherished Memories ✨</h2>
             
+            <!-- PHOTOS UPDATED HERE -->
             <div class="scrapbook-album-grid">
                 <div class="polaroid" style="--r: -3deg;"><img src="1.jpg.jpeg"><div class="polaroid-caption">Innocence 🌸</div></div>
                 <div class="polaroid" style="--r: 2deg;"><img src="2.jpg.jpeg"><div class="polaroid-caption">Home 🏡</div></div>
@@ -1130,9 +1138,11 @@
         </div>
     </section>
 
+    <!-- SECTION 9: THE PURE NIGHT SKY & MAGIC STAR BURST FINALE -->
     <section id="ending-section">
         <div class="interactive-layer" style="max-width: 500px;" id="ending-entrance-container">
             
+            <!-- Shooting Star and Burst Layout perfectly synchronized -->
             <div class="star-animation-container">
                 <div class="falling-star">
                     <div class="star-sparkle s1"></div>
@@ -1144,6 +1154,8 @@
                 <div class="revealed-hbd">Happy Birthday</div>
             </div>
             
+            <!-- Once Again Happy Birthday Message -->
+            <!-- FIX: Drastically reduced fade-in delay (from 4.5s to 2.5s) to appear instantly after the Happy Birthday text fully reveals -->
             <div class="final-message-box" style="margin-top: 40px; opacity: 0; animation: stageFadeIn 2s ease forwards 2.5s; text-align: center;">
                 <h2 class="serif-heading" style="color: #ffffff; font-size: 2.2rem; text-shadow: 0 2px 10px rgba(0,0,0,0.5);">Once again, Happy 20th Birthday! 🎉</h2>
                 <p style="color: #e0dce6; font-size: 1.05rem; margin-top: 15px; font-style: italic; line-height: 1.6; text-shadow: 0 1px 5px rgba(0,0,0,0.5);">
@@ -1321,6 +1333,13 @@
                     if(burstMarker) {
                         const rect = burstMarker.getBoundingClientRect();
                         triggerSkyBurst(rect.left + rect.width / 2, rect.top + rect.height / 2);
+                    }
+                    
+                    // PLAYS FIREWORKS SOUND EXACTLY WHEN THE EXPLOSION HAPPENS
+                    const fireworksSound = document.getElementById('fireworks-audio');
+                    if (fireworksSound) {
+                        fireworksSound.currentTime = 0;
+                        fireworksSound.play().catch(e => console.log("Audio play blocked by browser:", e));
                     }
                 }, 1200);
             }
